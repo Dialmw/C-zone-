@@ -6,8 +6,8 @@ const twilio = require('twilio');
 const app = express();
 app.use(bodyParser.json());
 
-const accountSid = 'YOUR_TWILIO_ACCOUNT_SID';  // Replace with your Twilio SID
-const authToken = 'YOUR_TWILIO_AUTH_TOKEN';    // Replace with your Twilio Auth Token
+const accountSid = 'ACb3657ee99aaa6995efd37f4279995a0f';  // Replace with your Twilio SID
+const authToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTS3h4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4LTE0NTA0NzExNDciLCJpc3MiOiJTS3h4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4Iiwic3ViIjoiQUN4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eCIsIm5iZiI6MTQ1MDQ3MTE0NywiZXhwIjoxNDUwNDc0NzQ3LCJncmFudHMiOnsiaWRlbnRpdHkiOiJ1c2VyQGV4YW1wbGUuY29tIiwiaXBfbWVzc2FnaW5nIjp7InNlcnZpY2Vfc2lkIjoiSVN4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eCIsImVuZHBvaW50X2lkIjoiSGlwRmxvd1NsYWNrRG9ja1JDOnVzZXJAZXhhbXBsZS5jb206c29tZWlvc2RldmljZSJ9fX0.IHx8KeH1acIfwnd8EIin3QBGPbfnF-yVnSFp5NpQJi0';    // Replace with your Twilio Auth Token
 const client = new twilio(accountSid, authToken);
 
 const adminPhone = 'whatsapp:+254783169602';
