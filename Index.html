@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=360, initial-scale=1.0" />
+  <title>LIAM GO</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(120deg, #9488b6 65%, #fff 120%);
+      font-family: 'Segoe UI', Arial, Impact, sans-serif;
+      color: #1f1335;
+      overflow-x: hidden;
+    }
+    .top-banner {
+      display: flex; flex-wrap: wrap;
+      background: linear-gradient(120deg, #fff 60%, #ad9dc4 100%);
+      min-height: 100px;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 0;
+      position: relative;
+      box-shadow: 0 2px 15px #a38cdc55;
+    }
+    .liam-title {
+      font-size: 3em;
+      font-weight: bold;
+      color: #7a68a8;
+      letter-spacing: -2px;
+      padding: 14px 0 0 18px;
+      text-shadow: 2px 2px 12px #fff, 0 1px 0 #000;
+      filter: drop-shadow(0 2px 3px #0005);
+      flex: 1 1 50%;
+      z-index: 2;
+    }
+    .now-tag {
+      position: absolute;
+      left: 20px; top: 74px;
+      font-size: 1.7em;
+      color: #fff;
+      text-shadow: 2px 2px 8px #000, 0 1px 0 #b09ff5;
+      background: #a77ab7;
+      border-radius: 0 16px 16px 0;
+      padding: 0 18px 2px 0;
+      font-family: Impact, Arial Black, Arial, sans-serif;
+      letter-spacing: 2px;
+      border-left: 8px solid #fff;
+      border-bottom: 2px solid #d9c8ef;
+    }
+    .top-controls {
+      flex: 1 1 45%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      padding: 10px 15px 0 0;
+      z-index: 2;
+    }
+    .today {
+      font-size: 1.1em;
+      font-weight: bold;
+      margin-bottom: 0.1em;
+      color: #000;
+      text-align: right;
+    }
+    .today span {
+      font-size: 0.8em;
+      color: #5a029d;
+      font-weight: bold;
+    }
+    .subs-live {
+      display: flex; gap: 0.5em;
+      margin: 0.2em 0 0.7em 0;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+    .subs-tag {
+      background: #ffe34b;
+      color: #311379;
+      border-radius: 12px;
+      padding: 0.16em 0.65em;
+      font-size: 0.95em;
+      font-weight: bold;
+      box-shadow: 0 2px 6px #baa;
+      animation: subsPulse 2s infinite alternate;
+    }
+    @keyframes subsPulse {
+      from { background: #ffe34b; color: #311379; }
+      to   { background: #fff5c3; color: #23206f; }
+    }
+    .innovate {
+      font-size: 0.96em;
+      color: #222;
+      font-weight: normal;
+      margin-bottom: 0.4em;
+      text-align: right;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      letter-spacing: 0px;
+    }
+    .nav-row {
+      display: flex;
+      gap: 9px;
+      margin-bottom: 0.32em;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+    .nav-btn, .gallery-btn {
+      display: inline-block;
+      background: #fff;
+      color: #21206f;
+      border-radius: 13px;
+      font-size: 1.15em;
+      font-weight: bold;
+      padding: 0.12em 0.7em;
+      box-shadow: 2px 2px 7px #bbb8;
+      margin-right: 3px;
+      border: none;
+      cursor: pointer;
+      transition: background .18s, color .18s;
+    }
+    .gallery-btn {
+      color: #ff3c8c;
+      box-shadow: 2px 2px 7px #ffb3e8;
+    }
+    .menu-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 4px;
+      margin-right: 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .menu-btn .menu-top {
+      font-size: 1.08em;
+      font-weight: bold;
+      color: #5526ac;
+    }
+    .menu-btn .menu-bottom {
+      font-size: 1.1em;
+      color: #1f1694;
+      font-weight: bold;
+      letter-spacing: 1px;
+      margin-top: -2px;
+    }
+    .menu-btn .triangle {
+      width: 0; height: 0;
+      border-left: 18px solid transparent;
+      border-right: 18px solid transparent;
+      border-top: 16px solid #b09ff5;
+      margin-top: -1px;
+    }
+    .menu-popup {
+      display: none;
+      position: fixed;
+      top: 72px; right: 10px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 22px #7a68a880;
+      padding: 1.2em 1.1em 0.7em 1.1em;
+      z-index: 1002;
+      min-width: 180px;
+      animation: fadeIn .2s;
+    }
+    .menu-popup.show { display: block; }
+    .menu-popup .mp-title {
+      color: #7a68a8;
+      font-weight: bold;
+      font-size: 1.12em;
+      margin-bottom: 0.5em;
+      letter-spacing: 1px;
+    }
+    .menu-popup .mp-link {
+      display: flex;
+      align-items: center;
+      gap: 0.7em;
+      margin-bottom: 0.8em;
+      color: #211f3e;
+      text-decoration: none;
+      font-size: 1.03em;
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 0.4em 0.7em;
+      transition: background 0.13s;
+    }
+    .menu-popup .mp-link:hover {
+      background: #f3e9ff;
+      color: #4e1d9c;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+    .search-bar-wrap {
+      display: flex;
+      align-items: center;
+      margin: 1.3em 0 1.2em 0;
+      justify-content: center;
+      width: 100%;
+    }
+    .search-bar {
+      flex: 1 1 65%;
+      max-width: 400px;
+      background: #222;
+      color: #fff;
+      border-radius: 22px 0 0 22px;
+      border: none;
+      padding: 0.8em 1em;
+      font-size: 1.1em;
+      outline: none;
+      box-shadow: 0 2px 10px #0002;
+      letter-spacing: 1.3px;
+    }
+    .search-btn {
+      background: linear-gradient(90deg, #b700ff 60%, #ff3c8c 120%);
+      color: #fff;
+      border: none;
+      font-size: 1.15em;
+      font-weight: bold;
+      border-radius: 0 22px 22px 0;
+      padding: 0.8em 1.7em;
+      margin-left: -5px;
+      cursor: pointer;
+      transition: background 0.15s;
+      box-shadow: 0 2px 10px #b700ff22;
+    }
+    .search-btn:hover { background: #ff3c8c; }
+    .content-section {
+      margin: 0 auto;
+      max-width: 700px;
+    }
+    .trend-news-row {
+      display: flex; gap: 1.2em; justify-content: space-between; margin-bottom: 1.15em; flex-wrap: wrap;
+    }
+    .trend-card, .news-card {
+      background: linear-gradient(90deg, #fff 70%, #dab6fc 120%);
+      border-radius: 13px;
+      padding: 0.8em 1.2em;
+      font-weight: bold;
+      font-size: 1.07em;
+      color: #522e85;
+      box-shadow: 0 2px 10px #a38cdc33;
+      margin-bottom: 0.7em;
+      min-width: 120px;
+      flex: 1 1 45%;
+      text-align: center;
+      transition: box-shadow 0.13s;
+    }
+    .trend-card:hover, .news-card:hover { box-shadow: 0 4px 16px #b700ff33;}
+    .video-card, .story-card {
+      background: linear-gradient(120deg, #fff 60%, #c9b4fc 100%);
+      border-radius: 13px;
+      box-shadow: 0 2px 14px #b39ddb55;
+      margin-bottom: 1.1em;
+      overflow: hidden;
+      position: relative;
+      transition: box-shadow 0.14s;
+      max-width: 99vw;
+    }
+    .video-img, .story-img {
+      width: 100%; display: block; object-fit: cover;
+      aspect-ratio: 16/7.5;
+      background: #000;
+      border-bottom: 2px solid #e0c8ff;
+    }
+    .btn-row {
+      display: flex; justify-content: space-around;
+      background: #9488b6;
+      padding: 0.5em 0;
+      border-radius: 0 0 13px 13px;
+      gap: 0.6em;
+    }
+    .v-btn {
+      display: flex; align-items: center; gap: 0.3em;
+      background: #fff;
+      color: #4e1d9c;
+      border-radius: 9px;
+      font-weight: bold;
+      font-size: 1.07em;
+      padding: 0.31em 1.15em;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 1px 4px #b39ddb55;
+      text-transform: capitalize;
+      transition: background 0.12s, color 0.12s;
+      outline: none;
+    }
+    .v-btn:hover { background: #f3e9ff; color: #ff3c8c; }
+    .stories-title {
+      font-size: 2em;
+      font-family: Impact, 'Arial Black', Arial, sans-serif;
+      color: #1b0d2c;
+      letter-spacing: 2px;
+      margin: 1.2em 0 0.5em 0.1em;
+      text-shadow: 2px 2px 9px #fff, 0 2px 0 #b09ff5;
+    }
+    .stories-grid {
+      display: flex;
+      gap: 1.1em;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+    .story-card {
+      width: calc(50% - 0.7em);
+      min-width: 140px;
+    }
+    .story-img {
+      aspect-ratio: 1/1;
+      border-radius: 16px 16px 0 0;
+    }
+    .story-content {
+      padding: 0.7em 1em 0.1em 1em;
+      font-size: 1.1em;
+      font-weight: bold;
+      color: #4e1d9c;
+      text-align: center;
+    }
+    /* Responsive */
+    @media (max-width: 650px) {
+      .content-section { max-width: 99vw; }
+      .video-card, .story-card { margin-bottom: 1.12em; }
+      .stories-grid { gap: 0.5em; }
+      .story-card { width: 100%; min-width: unset;}
+    }
+    @media (max-width: 430px) {
+      .liam-title { font-size: 2.1em; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Banner & Menu -->
+  <div class="top-banner">
+    <div class="liam-title">LIAM GO</div>
+    <div class="now-tag">Now</div>
+    <div class="top-controls">
+      <div class="today" id="today"></div>
+      <div class="subs-live" id="subsLive"></div>
+      <div class="innovate">innovation of ideas wake up and work</div>
+      <div class="nav-row">
+        <button class="nav-btn" id="trendsBtn">Trends</button>
+        <button class="gallery-btn" id="galleryBtn">Gallery</button>
+        <div class="menu-btn" id="menuBtn">
+          <div class="menu-top">Me</div>
+          <div class="menu-bottom">nu</div>
+          <div class="triangle"></div>
+        </div>
+      </div>
+    </div>
+    <!-- Menu Popup -->
+    <div class="menu-popup" id="menuPopup">
+      <div class="mp-title">Quick Links</div>
+      <a class="mp-link" href="https://t.me/ScionzM" target="_blank"><i class="fa-brands fa-telegram"></i> Creator</a>
+      <a class="mp-link" href="https://youtube.com/@scionzice" target="_blank"><i class="fa-brands fa-youtube"></i> YouTube</a>
+      <a class="mp-link" href="https://www.tiktok.com/@liam.eyes" target="_blank"><i class="fa-brands fa-tiktok"></i> TikTok</a>
+      <a class="mp-link" href="https://x.com/DialDiaz23" target="_blank"><i class="fa-brands fa-x-twitter"></i> X</a>
+      <a class="mp-link" href="https://www.instagram.com/scionz_liam" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a>
+    </div>
+  </div>
+  <!-- Search Bar -->
+  <div class="search-bar-wrap">
+    <input class="search-bar" id="searchInput" type="text" placeholder="Search videos or music..." />
+    <button class="search-btn" id="searchBtn"><i class="fa fa-search"></i> Search</button>
+  </div>
+  <div class="content-section">
+    <!-- Trends & News -->
+    <div class="trend-news-row">
+      <div class="trend-card" id="trendCard">#1 Trending: Cyber Beats</div>
+      <div class="news-card" id="newsCard">News: AI breaks new records in 2025!</div>
+    </div>
+    <!-- Infinite Scroll Video Cards -->
+    <div id="videoList"></div>
+    <!-- Stories -->
+    <div class="stories-title">Stories</div>
+    <div class="stories-grid" id="storiesList"></div>
+  </div>
+  <script>
+    // Date
+    function formattedDate() {
+      const d = new Date();
+      return d.toLocaleDateString(undefined, { weekday: "short", day: "numeric", month: "short", year: "numeric" });
+    }
+    document.getElementById('today').innerHTML = `<b>Today</b> <span>${formattedDate()}</span>`;
+
+    // Subs Live Taglines (auto-update)
+    const subsOptions = [
+      "💡 Innovate", "🔴 Subs LIVE", "🔥 Trending", "💬 Chat Open", "🎵 New Release", "✨ Explore", "📰 News", "🎉 Events"
+    ];
+    function updateSubsLive() {
+      const subsEl = document.getElementById('subsLive');
+      subsEl.innerHTML = '';
+      let tags = [];
+      for(let i=0; i<3; i++) {
+        tags.push(subsOptions[Math.floor(Math.random()*subsOptions.length)]);
+      }
+      tags = [...new Set(tags)];
+      tags.forEach(tag => {
+        const t = document.createElement('div');
+        t.className = "subs-tag";
+        t.textContent = tag;
+        subsEl.appendChild(t);
+      });
+    }
+    updateSubsLive();
+    setInterval(updateSubsLive, 5000);
+
+    // Trends & News live update
+    const trendList = [
+      "#1 Trending: Cyber Beats", "#1 Trending: Dial'echoe", "#1 Trending: Liam's Lab", "#1 Trending: Music X", "#1 Trending: AI Art"
+    ];
+    const newsList = [
+      "News: AI breaks new records in 2025!",
+      "News: Liam Go reaches 100k subs!",
+      "News: New video drops this Sunday.",
+      "News: Tech Expo 2025 announced.",
+      "News: Major update coming soon!"
+    ];
+    function updateTrendsNews() {
+      document.getElementById('trendCard').textContent = trendList[Math.floor(Math.random()*trendList.length)];
+      document.getElementById('newsCard').textContent = newsList[Math.floor(Math.random()*newsList.length)];
+    }
+    setInterval(updateTrendsNews, 9000);
+
+    // Infinite Scroll Video Data
+    let allVideos = [
+      {
+        title: "Dial'echoe",
+        img: "https://raw.githubusercontent.com/Dialmw/Gallery-/main/Image%204.png",
+        actions: { play: "#", source: "#", download: "#", share: "#" }
+      },
+      {
+        title: "Urban Life",
+        img: "https://raw.githubusercontent.com/Dialmw/Gallery-/main/Image%203.jpg",
+        actions: { play: "#", source: "#", download: "#", share: "#" }
+      },
+      {
+        title: "City Views",
+        img: "https://raw.githubusercontent.com/Dialmw/Gallery-/main/Image%202.jpg",
+        actions: { play: "#", source: "#", download: "#", share: "#" }
+      },
+      {
+        title: "Cyber Hacker",
+        img: "https://raw.githubusercontent.com/Dialmw/Gallery-/main/Image%201.jpg",
+        actions: { play: "#", source: "#", download: "#", share: "#" }
+      },
+      {
+        title: "Neon Dance",
+        img: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80",
+        actions: { play: "#", source: "#", download: "#", share: "#" }
+      }
+    ];
+    let loadedVideos = [];
+    let videoPointer = 0;
+    const videoListEl = document.getElementById('videoList');
+    function renderVideos(more=4) {
+      let count = 0;
+      while(videoPointer < allVideos.length && count < more) {
+        const v = allVideos[videoPointer];
+        const card = document.createElement('div');
+        card.className = 'video-card';
+        card.innerHTML = `
+          <img class="video-img" src="${v.img}" alt="${v.title}" />
+          <div class="btn-row">
+            <button class="v-btn" onclick="alert('Playing ${v.title}')"><i class="fa fa-play"></i> Play</button>
+            <button class="v-btn" onclick="alert('Source for ${v.title}')"><i class="fa fa-link"></i> Source</button>
+            <button class="v-btn" onclick="alert('Download ${v.title}')"><i class="fa fa-download"></i> Download</button>
+            <button class="v-btn" onclick="navigator.share ? navigator.share({title: '${v.title}', url: window.location.href}) : prompt('Copy URL:', window.location.href);"><i class="fa fa-share"></i> Share</button>
+          </div>
+        `;
+        videoListEl.appendChild(card);
+        loadedVideos.push(v);
+        videoPointer++;
+        count++;
+      }
+    }
+    renderVideos(4);
+
+    // Infinite scroll
+    window.addEventListener('scroll', function() {
+      if(window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
+        if(videoPointer < allVideos.length) {
+          renderVideos(2);
+        } else {
+          // Simulate API fetch new videos
+          setTimeout(() => {
+            allVideos = allVideos.concat(allVideos.map(v => ({...v, title: v.title + " (new)"})));
+            renderVideos(2);
+          }, 800);
+        }
+      }
+    });
+
+    // Stories Data
+    const stories = [
+      {
+        title: "Social World",
+        img: "https://img.freepik.com/free-vector/social-media-icons-set_53876-124761.jpg"
+      },
+      {
+        title: "Jumping Girl",
+        img: "https://raw.githubusercontent.com/Dialmw/Gallery-/main/Image%202.jpg"
+      }
+    ];
+    const storiesList = document.getElementById('storiesList');
+    function renderStories() {
+      storiesList.innerHTML = '';
+      stories.forEach(st => {
+        const card = document.createElement('div');
+        card.className = 'story-card';
+        card.innerHTML = `
+          <img class="story-img" src="${st.img}" alt="${st.title}" />
+          <div class="btn-row">
+            <button class="v-btn" onclick="alert('Play story: ${st.title}')"><i class="fa fa-play"></i> Play</button>
+            <button class="v-btn" onclick="alert('Source for ${st.title}')"><i class="fa fa-link"></i> Source</button>
+            <button class="v-btn" onclick="alert('Download ${st.title}')"><i class="fa fa-download"></i> Download</button>
+            <button class="v-btn" onclick="navigator.share ? navigator.share({title: '${st.title}', url: window.location.href}) : prompt('Copy URL:', window.location.href);"><i class="fa fa-share"></i> Share</button>
+          </div>
+        `;
+        storiesList.appendChild(card);
+      });
+    }
+    renderStories();
+
+    // Search functionality (filters videos by title)
+    document.getElementById('searchBtn').onclick = function() {
+      const val = document.getElementById('searchInput').value.trim().toLowerCase();
+      videoListEl.innerHTML = '';
+      loadedVideos = [];
+      videoPointer = 0;
+      if(val) {
+        allVideos.filter(v => v.title.toLowerCase().includes(val)).forEach((v, i) => {
+          const card = document.createElement('div');
+          card.className = 'video-card';
+          card.innerHTML = `
+            <img class="video-img" src="${v.img}" alt="${v.title}" />
+            <div class="btn-row">
+              <button class="v-btn" onclick="alert('Playing ${v.title}')"><i class="fa fa-play"></i> Play</button>
+              <button class="v-btn" onclick="alert('Source for ${v.title}')"><i class="fa fa-link"></i> Source</button>
+              <button class="v-btn" onclick="alert('Download ${v.title}')"><i class="fa fa-download"></i> Download</button>
+              <button class="v-btn" onclick="navigator.share ? navigator.share({title: '${v.title}', url: window.location.href}) : prompt('Copy URL:', window.location.href);"><i class="fa fa-share"></i> Share</button>
+            </div>
+          `;
+          videoListEl.appendChild(card);
+        });
+      } else {
+        renderVideos(4);
+      }
+    };
+
+    // Also search on Enter key
+    document.getElementById('searchInput').addEventListener('keydown', function(e) {
+      if(e.key === 'Enter') document.getElementById('searchBtn').click();
+    });
+
+    // Gallery/Trends buttons (demo actions)
+    document.getElementById('galleryBtn').onclick = function() {
+      alert("Open Gallery feature coming soon!");
+    };
+    document.getElementById('trendsBtn').onclick = function() {
+      alert("Open Trends feature coming soon!");
+    };
+
+    // Menu
+    const menuBtn = document.getElementById('menuBtn');
+    const menuPopup = document.getElementById('menuPopup');
+    menuBtn.onclick = function() {
+      menuPopup.classList.toggle('show');
+    };
+    // Hide menu on outside click
+    document.addEventListener('click', function(e) {
+      if(!menuBtn.contains(e.target) && !menuPopup.contains(e.target)) {
+        menuPopup.classList.remove('show');
+      }
+    });
+
+    // Initial auto-update for content (simulated)
+    setInterval(() => {
+      updateTrendsNews();
+      renderStories();
+    }, 12000);
+
+  </script>
+</body>
+</html>
